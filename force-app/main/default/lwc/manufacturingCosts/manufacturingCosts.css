@@ -1,0 +1,28 @@
+
+.cost-item {
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    border-left: 4px solid #1976d2;
+}
+
+.summary-card {
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+}
+
+.material-card {
+    border-top: 4px solid #4caf50;
+}
+
+.labor-card {
+    border-top: 4px solid #ff9800;
+}
+
+.direct-card {
+    border-top: 4px solid #2196f3;
+}

@@ -1,0 +1,130 @@
+
+<template>
+    <div class="slds-p-around_medium">
+        <!-- Header -->
+        <div class="slds-grid slds-grid_align-spread slds-m-bottom_large">
+            <div>
+                <h2 class="slds-text-heading_medium slds-m-bottom_x-small">Manufacturing Costs</h2>
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    Review manufacturing costs and direct expenses
+                </p>
+            </div>
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                <lightning-icon icon-name="utility:currency" size="small" class="slds-m-right_x-small"></lightning-icon>
+                <span class="slds-text-body_small slds-m-right_x-small">Total Cost:</span>
+                <lightning-badge label="{totalManufacturingCost}" variant="success"></lightning-badge>
+            </div>
+        </div>
+
+        <!-- Product Selection -->
+        <div class="slds-m-bottom_large">
+            <lightning-combobox
+                label="Select Product"
+                value={activeProduct}
+                options={activeProductOptions}
+                onchange={handleProductChange}
+                variant="label-inline">
+            </lightning-combobox>
+        </div>
+
+        <div class="slds-grid slds-gutters">
+            <!-- Cost Breakdown -->
+            <div class="slds-col slds-size_1-of-2">
+                <div class="slds-card">
+                    <div class="slds-card__header">
+                        <h3 class="slds-card__header-title slds-text-heading_small">
+                            <lightning-icon icon-name="utility:chart" size="small" class="slds-m-right_x-small"></lightning-icon>
+                            Cost Breakdown
+                        </h3>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <template for:each={costBreakdown} for:item="item">
+                            <div key={item.category} class="slds-grid slds-grid_align-spread slds-m-bottom_medium cost-item">
+                                <div>
+                                    <div class="slds-text-body_regular">{item.category}</div>
+                                    <div class="slds-text-body_small slds-text-color_weak">{item.percentage}% of total</div>
+                                </div>
+                                <div class="slds-text-heading_small">${item.amount}</div>
+                            </div>
+                        </template>
+                        
+                        <div class="slds-border_top slds-p-top_medium slds-m-top_medium">
+                            <div class="slds-grid slds-grid_align-spread">
+                                <span class="slds-text-heading_small">Total Manufacturing Cost</span>
+                                <span class="slds-text-heading_medium slds-text-color_brand">${totalManufacturingCost}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Direct Costs Input -->
+            <div class="slds-col slds-size_1-of-2">
+                <div class="slds-card">
+                    <div class="slds-card__header">
+                        <h3 class="slds-card__header-title slds-text-heading_small">
+                            <lightning-icon icon-name="utility:edit" size="small" class="slds-m-right_x-small"></lightning-icon>
+                            Direct Costs
+                        </h3>
+                    </div>
+                    <div class="slds-card__body slds-card__body_inner">
+                        <template for:each={directCostItems} for:item="cost">
+                            <div key={cost.id} class="slds-form-element slds-m-bottom_medium">
+                                <label class="slds-form-element__label">{cost.label}</label>
+                                <div class="slds-form-element__control">
+                                    <lightning-input
+                                        type="number"
+                                        value={cost.value}
+                                        data-cost-id={cost.id}
+                                        onchange={handleDirectCostChange}
+                                        formatter="currency"
+                                        variant="label-hidden">
+                                    </lightning-input>
+                                </div>
+                            </div>
+                        </template>
+                        
+                        <div class="slds-border_top slds-p-top_medium slds-m-top_medium">
+                            <div class="slds-grid slds-grid_align-spread">
+                                <span class="slds-text-body_regular">Total Direct Costs</span>
+                                <span class="slds-text-heading_small">${totalDirectCosts}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="slds-grid slds-gutters slds-m-top_large">
+            <div class="slds-col slds-size_1-of-3">
+                <div class="slds-card summary-card material-card">
+                    <div class="slds-card__body slds-card__body_inner slds-text-align_center">
+                        <lightning-icon icon-name="utility:package" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                        <div class="slds-text-heading_large">${materialCost}</div>
+                        <div class="slds-text-body_small">Material Costs</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <div class="slds-card summary-card labor-card">
+                    <div class="slds-card__body slds-card__body_inner slds-text-align_center">
+                        <lightning-icon icon-name="utility:clock" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                        <div class="slds-text-heading_large">${manufacturingCost}</div>
+                        <div class="slds-text-body_small">Manufacturing Labor</div>
+                        <div class="slds-text-body_small slds-text-color_weak">{manufacturingHours} hrs × ${hourlyRate}/hr</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-3">
+                <div class="slds-card summary-card direct-card">
+                    <div class="slds-card__body slds-card__body_inner slds-text-align_center">
+                        <lightning-icon icon-name="utility:currency" size="medium" class="slds-m-bottom_small"></lightning-icon>
+                        <div class="slds-text-heading_large">${totalDirectCosts}</div>
+                        <div class="slds-text-body_small">Direct Costs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

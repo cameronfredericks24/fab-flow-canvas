@@ -1,0 +1,43 @@
+
+.quote-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.quote-item:last-child {
+    border-bottom: 2px solid #1976d2;
+    font-weight: bold;
+}
+
+.cost {
+    color: #d32f2f;
+}
+
+.price {
+    color: #1976d2;
+}
+
+.discount {
+    color: #ff9800;
+}
+
+.tax {
+    color: #9c27b0;
+}
+
+.shipping {
+    color: #607d8b;
+}
+
+.total {
+    color: #4caf50;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.profit-summary {
+    background-color: #e8f5e8;
+    border: 1px solid #4caf50;
+    border-radius: 0.5rem;
+    padding: 1rem;
+}

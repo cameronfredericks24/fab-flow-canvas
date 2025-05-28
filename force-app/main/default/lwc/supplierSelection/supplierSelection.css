@@ -1,0 +1,22 @@
+
+.supplier-header {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+.supplier-row {
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.25rem;
+}
+
+.supplier-row:hover {
+    border-color: #1976d2;
+    background-color: #f8faff;
+}
+
+.cost-summary {
+    border: 2px solid #1976d2;
+    background-color: #e3f2fd;
+}

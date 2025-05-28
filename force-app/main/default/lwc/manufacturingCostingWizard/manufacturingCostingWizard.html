@@ -1,0 +1,107 @@
+
+<template>
+    <div class="slds-theme_default">
+        <div class="slds-container_large slds-container_center slds-p-around_large">
+            <!-- Header -->
+            <div class="slds-m-bottom_large">
+                <h1 class="slds-text-heading_large slds-text-color_default slds-m-bottom_x-small">
+                    Make-to-Order Manufacturing Costing
+                </h1>
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    Streamlined workflow for design specifications, costing analysis, and quote generation
+                </p>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="slds-card slds-m-bottom_large">
+                <div class="slds-card__body slds-card__body_inner slds-p-around_large">
+                    <lightning-progress-indicator 
+                        current-step={currentStep} 
+                        type="path" 
+                        variant="base">
+                        <template for:each={steps} for:item="step">
+                            <lightning-progress-step 
+                                key={step.id}
+                                label={step.title} 
+                                value={step.id}
+                                onclick={handleStepClick}
+                                data-step-id={step.id}>
+                            </lightning-progress-step>
+                        </template>
+                    </lightning-progress-indicator>
+                    
+                    <div class="slds-m-top_medium">
+                        <p class="slds-text-heading_small">{currentStepData.title}</p>
+                        <p class="slds-text-body_small slds-text-color_weak">{currentStepData.description}</p>
+                        <lightning-badge label={currentStepData.role} class="slds-m-top_x-small"></lightning-badge>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="slds-card">
+                <div class="slds-card__body slds-card__body_inner slds-p-around_large">
+                    <template if:true={showMaterialSpecification}>
+                        <c-material-specification 
+                            project-data={projectData}
+                            ondataupdate={handleDataUpdate}>
+                        </c-material-specification>
+                    </template>
+                    
+                    <template if:true={showManufacturingEfforts}>
+                        <c-manufacturing-efforts 
+                            project-data={projectData}
+                            ondataupdate={handleDataUpdate}>
+                        </c-manufacturing-efforts>
+                    </template>
+                    
+                    <template if:true={showSupplierSelection}>
+                        <c-supplier-selection 
+                            project-data={projectData}
+                            ondataupdate={handleDataUpdate}>
+                        </c-supplier-selection>
+                    </template>
+                    
+                    <template if:true={showManufacturingCosts}>
+                        <c-manufacturing-costs 
+                            project-data={projectData}
+                            ondataupdate={handleDataUpdate}>
+                        </c-manufacturing-costs>
+                    </template>
+                    
+                    <template if:true={showSalesSummary}>
+                        <c-sales-summary 
+                            project-data={projectData}
+                            ondataupdate={handleDataUpdate}>
+                        </c-sales-summary>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="slds-grid slds-grid_align-spread slds-m-top_large">
+                <lightning-button 
+                    variant="neutral" 
+                    label="Previous" 
+                    icon-name="utility:chevronleft" 
+                    icon-position="left"
+                    disabled={isPreviousDisabled}
+                    onclick={handlePrevious}>
+                </lightning-button>
+                
+                <div class="slds-text-body_small slds-text-color_weak slds-align-middle">
+                    Step {currentStep} of {steps.length}
+                </div>
+
+                <lightning-button 
+                    variant="brand" 
+                    label="Next" 
+                    icon-name="utility:chevronright" 
+                    icon-position="right"
+                    disabled={isNextDisabled}
+                    onclick={handleNext}>
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+</template>

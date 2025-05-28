@@ -1,0 +1,24 @@
+
+.process-header {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+.process-row {
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+}
+
+.process-row:hover {
+    border-color: #1976d2;
+    background-color: #f8faff;
+}
+
+.effort-summary {
+    background-color: #e3f2fd;
+    border: 1px solid #1976d2;
+    border-radius: 0.25rem;
+}

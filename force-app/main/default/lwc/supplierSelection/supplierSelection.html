@@ -1,0 +1,126 @@
+
+<template>
+    <div class="slds-p-around_medium">
+        <!-- Header -->
+        <div class="slds-grid slds-grid_align-spread slds-m-bottom_large">
+            <div>
+                <h2 class="slds-text-heading_medium slds-m-bottom_x-small">Supplier Selection</h2>
+                <p class="slds-text-body_regular slds-text-color_weak">
+                    Select suppliers and determine unit costs for materials
+                </p>
+            </div>
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-end">
+                <lightning-icon icon-name="utility:currency" size="small" class="slds-m-right_x-small"></lightning-icon>
+                <span class="slds-text-body_small slds-m-right_x-small">Total Material Cost:</span>
+                <lightning-badge label="{grandTotal}" variant="success"></lightning-badge>
+            </div>
+        </div>
+
+        <!-- Product Selection -->
+        <div class="slds-m-bottom_large">
+            <lightning-combobox
+                label="Select Product"
+                value={activeProduct}
+                options={activeProductOptions}
+                onchange={handleProductChange}
+                variant="label-inline">
+            </lightning-combobox>
+        </div>
+
+        <!-- Material Sections -->
+        <template for:each={processedMaterialSections} for:item="section">
+            <div key={section.id} class="slds-card slds-m-bottom_medium">
+                <div class="slds-card__header">
+                    <h3 class="slds-card__header-title slds-text-heading_small">
+                        <lightning-icon icon-name="utility:package" size="small" class="slds-m-right_x-small"></lightning-icon>
+                        {section.title}
+                        <lightning-badge label="{section.sectionTotal}" class="slds-m-left_small"></lightning-badge>
+                    </h3>
+                </div>
+                <div class="slds-card__body slds-card__body_inner">
+                    <!-- Header Row -->
+                    <div class="slds-grid slds-gutters slds-m-bottom_small supplier-header">
+                        <div class="slds-col slds-size_2-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Material</label>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Specifications</label>
+                        </div>
+                        <div class="slds-col slds-size_3-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Supplier</label>
+                        </div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Unit Cost</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Qty</label>
+                        </div>
+                        <div class="slds-col slds-size_1-of-12">
+                            <label class="slds-form-element__label slds-text-title_caps">Total</label>
+                        </div>
+                    </div>
+
+                    <!-- Material Rows -->
+                    <template for:each={section.materials} for:item="material">
+                        <div key={material.id} class="slds-grid slds-gutters slds-m-bottom_small supplier-row slds-p-around_small">
+                            <div class="slds-col slds-size_2-of-12">
+                                <div class="slds-text-body_regular">{material.name}</div>
+                                <div class="slds-grid slds-grid_vertical-align-center slds-m-top_x-small">
+                                    <lightning-icon icon-name="utility:lock" size="x-small" class="slds-m-right_xx-small"></lightning-icon>
+                                    <span class="slds-text-body_small slds-text-color_weak">Design locked</span>
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <span class="slds-text-body_small slds-text-color_weak">{material.specs}</span>
+                            </div>
+                            <div class="slds-col slds-size_3-of-12">
+                                <lightning-combobox
+                                    placeholder="Select supplier"
+                                    options={suppliers}
+                                    data-key={material.key}
+                                    onchange={handleSupplierChange}
+                                    variant="label-hidden">
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_2-of-12">
+                                <lightning-input
+                                    type="number"
+                                    placeholder="0.00"
+                                    value={material.unitCost}
+                                    data-key={material.key}
+                                    onchange={handleCostChange}
+                                    variant="label-hidden">
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12">
+                                <lightning-input
+                                    type="number"
+                                    value={material.quantity}
+                                    data-key={material.key}
+                                    onchange={handleQuantityChange}
+                                    variant="label-hidden">
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-12">
+                                <span class="slds-text-body_regular slds-text-align_right">{material.totalCost}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- Cost Summary -->
+        <div class="slds-card cost-summary">
+            <div class="slds-card__body slds-card__body_inner slds-p-around_medium">
+                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <div class="slds-grid slds-grid_vertical-align-center">
+                        <lightning-icon icon-name="utility:calculator" size="small" class="slds-m-right_x-small"></lightning-icon>
+                        <span class="slds-text-heading_small">Total Material Cost</span>
+                    </div>
+                    <span class="slds-text-heading_large slds-text-color_brand">${grandTotal}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
