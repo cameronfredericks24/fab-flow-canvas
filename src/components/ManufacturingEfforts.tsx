@@ -69,7 +69,7 @@ const ManufacturingEfforts: React.FC<ManufacturingEffortsProps> = ({ data, onUpd
 
       {/* Product Tabs */}
       <Tabs value={activeProduct.toString()} onValueChange={(value) => setActiveProduct(parseInt(value))}>
-        <TabsList className="grid w-full grid-cols-5 gap-2 bg-slate-100 p-1">
+        <TabsList className="grid w-full grid-cols-2 gap-2 bg-slate-100 p-1">
           {products.map((product) => (
             <TabsTrigger 
               key={product.id} 

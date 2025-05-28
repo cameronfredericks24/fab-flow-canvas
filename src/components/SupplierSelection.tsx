@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -213,7 +212,7 @@ const SupplierSelection: React.FC<SupplierSelectionProps> = ({ data, onUpdate })
 
       {/* Product Tabs */}
       <Tabs value={activeProduct.toString()} onValueChange={(value) => setActiveProduct(parseInt(value))}>
-        <TabsList className="grid w-full grid-cols-5 gap-2 bg-slate-100 p-1">
+        <TabsList className="grid w-full grid-cols-2 gap-2 bg-slate-100 p-1">
           {products.map((product) => (
             <TabsTrigger 
               key={product.id} 
